@@ -31,7 +31,7 @@ document.getElementById("saveTaskBtn").addEventListener("click", function () {
   let deadline = document.getElementById("taskDeadline").value;
 
   let task = {
-    id: new Date().getTime(), // Unique ID for the task
+    id: new Date().getTime(),
     title: title,
     description: description,
     deadline: deadline,
@@ -41,7 +41,7 @@ document.getElementById("saveTaskBtn").addEventListener("click", function () {
   renderTask(task);
   saveTask(task);
   $("#taskModal").modal("hide");
-  clearFormData(); // Clear form data after task is saved
+  clearFormData();
 });
 
 // Render task
@@ -114,7 +114,6 @@ function drop(event, status) {
   task.status = status;
   updateTask(task);
 
-  // Remove task from previous column and append to new column
   taskElement.parentNode.removeChild(taskElement);
   document.getElementById(status).appendChild(taskElement);
 }
