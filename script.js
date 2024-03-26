@@ -118,3 +118,19 @@ function drop(event, status) {
   taskElement.parentNode.removeChild(taskElement);
   document.getElementById(status).appendChild(taskElement);
 }
+
+// Get task by ID
+function getTaskById(taskId) {
+  let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+  return tasks.find((task) => task.id == taskId);
+}
+
+// Update task in localStorage
+function updateTask(updatedTask) {
+  let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+  let index = tasks.findIndex((task) => task.id == updatedTask.id);
+  if (index !== -1) {
+    tasks[index] = updatedTask;
+    saveTasks(tasks);
+  }
+}
