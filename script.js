@@ -84,3 +84,37 @@ function renderTask(task) {
     event.dataTransfer.setData("text/plain", task.id);
   });
 }
+// Save task to localStorage
+function saveTask(task) {
+  let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+  tasks.push(task);
+  saveTasks(tasks);
+}
+
+// Delete task
+function deleteTask(taskId) {
+  let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+  tasks = tasks.filter((task) => task.id != taskId);
+  saveTasks(tasks);
+}
+
+// Allow drop
+function allowDrop(event) {
+  event.preventDefault();
+}
+
+// Drop task
+function drop(event, status) {
+  event.preventDefault();
+  let taskId = event.dataTransfer.getData("text/plain");
+  let taskElement = document.getElementById(taskId);
+  let task = getTaskById(taskId);
+
+  // Update task status
+  task.status = status;
+  updateTask(task);
+
+  // Remove task from previous column and append to new column
+  taskElement.parentNode.removeChild(taskElement);
+  document.getElementById(status).appendChild(taskElement);
+}
