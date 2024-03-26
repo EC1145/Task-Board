@@ -1,3 +1,49 @@
+document.addEventListener("DOMContentLoaded", function () {
+  loadTasks();
+});
+
+// Save tasks to localStorage
+function saveTasks(tasks) {
+  localStorage.setItem("tasks", JSON.stringify(tasks));
+}
+
+// Load tasks from localStorage
+function loadTasks() {
+  let tasks = JSON.parse(localStorage.getItem("tasks"));
+  if (tasks) {
+    tasks.forEach((task) => {
+      renderTask(task);
+    });
+  }
+}
+
+// Clear form data
+function clearFormData() {
+  document.getElementById("taskTitle").value = "";
+  document.getElementById("taskDescription").value = "";
+  document.getElementById("taskDeadline").value = "";
+}
+
+// Add task
+document.getElementById("saveTaskBtn").addEventListener("click", function () {
+  let title = document.getElementById("taskTitle").value;
+  let description = document.getElementById("taskDescription").value;
+  let deadline = document.getElementById("taskDeadline").value;
+
+  let task = {
+    id: new Date().getTime(), // Unique ID for the task
+    title: title,
+    description: description,
+    deadline: deadline,
+    status: "not-started",
+  };
+
+  renderTask(task);
+  saveTask(task);
+  $("#taskModal").modal("hide");
+  clearFormData(); // Clear form data after task is saved
+});
+
 // Render task
 function renderTask(task) {
   let taskColumn = document.getElementById(task.status);
